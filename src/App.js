@@ -1,4 +1,4 @@
-// import {useState} from 'react';
+import { useState } from "react";
 
 const initialCourses = [
   {
@@ -24,13 +24,32 @@ const initialCourses = [
   },
 ];
 
+function Button({ onClick, children }) {
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
 export default function App() {
+  const [showAddCourseForm, setShowAddCourseForm] = useState(false);
+
+  function handleShowAddCourseForm() {
+    setShowAddCourseForm((show) => !show);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
         <CourseList />
-        <AddCourseForm />
-        <Button>Add Course</Button>
+        {showAddCourseForm && (
+          <AddCourseForm onShowAddCourseForm={handleShowAddCourseForm} />
+        )}
+
+        <Button onClick={handleShowAddCourseForm}>
+          {!showAddCourseForm ? "Add Course" : "Close"}
+        </Button>
       </div>
       <DetailForm />
     </div>
@@ -79,8 +98,4 @@ function DetailForm() {
       {/* Detail form elements will go here */}
     </form>
   );
-}
-
-function Button({ children }) {
-  return <button className="button">{children}</button>;
 }
