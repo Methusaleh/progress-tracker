@@ -30,6 +30,7 @@ export default function App() {
       <div className="sidebar">
         <CourseList />
         <AddCourseForm />
+        <Button>Add Course</Button>
       </div>
       <DetailForm />
     </div>
@@ -38,11 +39,13 @@ export default function App() {
 
 function CourseList() {
   return (
-    <div className="course-list">
+    <div>
       <h2>Course List</h2>
-      {initialCourses.map((course) => (
-        <Course key={course.id} course={course} />
-      ))}
+      <ul className="course-list">
+        {initialCourses.map((course) => (
+          <Course key={course.id} course={course} />
+        ))}
+      </ul>
     </div>
   );
 }
@@ -50,13 +53,14 @@ function CourseList() {
 function Course({ course }) {
   const { name, totalLessons, completedLessons, rating } = course;
   return (
-    <div className="course">
+    <li className="course">
       <h3>{name}</h3>
       <p>
         Progress: {completedLessons}/{totalLessons} lessons completed
       </p>
       <p>Rating: {rating} stars</p>
-    </div>
+      <Button>Manage</Button>
+    </li>
   );
 }
 
@@ -75,4 +79,8 @@ function DetailForm() {
       {/* Detail form elements will go here */}
     </form>
   );
+}
+
+function Button({ children }) {
+  return <button className="button">{children}</button>;
 }
